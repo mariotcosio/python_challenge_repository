@@ -2,7 +2,7 @@
 import os 
 import csv
 # Set file path for csv file
-with open(budget_data.csv) as budget_data_file:
+with open("budget_data.csv") as budget_data_file:
     csvreader = csv.reader(budget_data_file, delimiter = ',')
     header = next(csvreader)
 # defining variables
@@ -37,10 +37,10 @@ with open(budget_data.csv) as budget_data_file:
 # set output file path
 
 # Print answer
-print("Financial Analysis"")
+print("Financial Analysis")
 print("Total Months: " + str(total_months))
-print("Total Revenue: " + $ + str(total_rev))
-print("Average Change: " + $ + str(avg_rev))
+print("Total Revenue: " + "$" + str(total_rev))
+print("Average Change: " + "$" + str(avg_rev))
 print("Greatest Increase: " + str(greatest_increase[0]) + " ($" + str(greatest_increase[1]) +")")
 print("Greatest Decrease: " + str(greatest_decrease[0]) + " ($" + str(greatest_decrease[1]) +")")
 # Save to text file
