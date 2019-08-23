@@ -7,8 +7,8 @@ def gethestuff(csv):
     # defining variables
     months=0
     total=0
-    maxrevenue=0
-    minrevenue=0
+    maxrev=0
+    minrev=0
     avgchange=0
     # "" indicates a string
     maxmonth = ""
@@ -27,7 +27,7 @@ def gethestuff(csv):
             maxrevenue = pnl
             maxmonth = current_month
     return [months, total, maxrev, minrev, avgchange]
-# print(total) will show total revenue
+
  
 
 # Greatest profit and month
@@ -47,5 +47,6 @@ print(analysis[0])
 
 # set output file path
 # Print answer    
+# print(total) will show total revenue
 print(total)
 # Save to text file
