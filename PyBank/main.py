@@ -1,53 +1,57 @@
 # Import modules
 import os 
 import csv
-# Set file path for csv file
-with open("budget_data.csv") as budget_data_file:
-    csvreader = csv.reader(budget_data_file, delimiter = ',')
-    header = next(csvreader)
-# defining variables
-    total_months = 0
-    total_rev = 0
-    rev = []
-    pre_rev = 0
-    month_change = 0
-    rev_change = 0
-    greatest_increase = ["",0]
-    greatest_decrease = ["",99999999]
-    rev_change_list = []
-    avg_rev = 0
-#Total number of months and total revenue
-    for row in csvreader:
-        total_months += 1
-        total_rev += int(row["Profit/Losses"])
-#Average change in profits
-        avgchange = int(row["Profit/Losses"]) - prevrev
-        prevrev = int(row["Profit/Losses"])
-        rev_change_list += [rev_change]
-        month_change += [row["Date"]]
-        # if something is > something else:
-        if rev_change > greatest_increase[1]:
-            greatest_increase[1] = rev_change
-            greatest_increase[0] = row["Date"]
-        if rev_change < greatest_decrease[1]:
-            greatest_decrease[1] = rev_change
-            greatest_decrease[0] = row["Date"]
-    avg_rev = sum(rev_change_list)/len(rev_change_list)
 
-# set output file path
+# Create file path
+csv_file = os.path.join("budget_data.csv")
 
-# Print answer
-print("Financial Analysis")
-print("Total Months: " + str(total_months))
-print("Total Revenue: " + "$" + str(total_rev))
-print("Average Change: " + "$" + str(avg_rev))
-print("Greatest Increase: " + str(greatest_increase[0]) + " ($" + str(greatest_increase[1]) +")")
-print("Greatest Decrease: " + str(greatest_decrease[0]) + " ($" + str(greatest_decrease[1]) +")")
-# Save to text file
-with open(text, "w") as text_file
-    text_file.write("Total Months: " + str(total_months))
-    text_file.write("Total Revenue: " + "$" + str(total_rev))
-    text_file.write("Average Change: " + "$" + str(avg_rev))
-    text_file.write("Greatest Increase: " + str(greatest_increase[0]) + " ($" + str(greatest_increase[1]) +")")
-    text_file.write("Greatest Decrease: " + str(greatest_decrease[0]) + " ($" + str(greatest_decrease[1]) +")")
+# Create lists for months and revenue
+months = []
+revenue = []
+
+# Open csv 
+with open(csv_file, 'r') as csvfile:
+    csvread = csv.reader(csvfile)
+    next(csvread, None)
+    for row in csvread:
+        months.append(row[0])
+        revenue.append(int(row[1]))
+
+# Total Months
+total_months = len(months)
+
+# Loop through revenue to determine greatest increase and decrease of revenue
+greatest_increase = revenue[0]
+greatest_decrease = revenue[0]
+total_revenue = 0
+
+for r in range(len(revenue)):
+    if revenue[r] >= greatest_increase:
+        greatest_increase = revenue[r]
+        max_month = months[r]
+    elif revenue[r] <= greatest_decrease:
+        greatest_decrease = revenue[r]
+        min_month = months[r]
+    total_revenue += revenue[r]
+
+# Calculate the average change
+avg_change = round(total_revenue/total_months, 2)
+
+# set path for output file
+output_file = os.path.join('output.txt')
+
+# open file in write mode and print summary
+with open(output_file, 'w') as writefile:
+    writefile.writelines("Financial Analysis\n")
+    writefile.writelines("Total Months: " + str(total_months) + "\n")
+    writefile.writelines("Total Revenue: " + "$" + str(total_revenue) + "\n")
+    writefile.writelines("Average Revenue Change: " + "$" + str(avg_change) + "\n")
+    writefile.writelines("Greatest Increase in Revenue: " + max_month + "$" + str(greatest_increase) + "\n")
+    writefile.writelines("Greatest Decrease in Revenue: " + min_month+ "$" + str(greatest_decrease) + "\n")
+
+# Open file in r mode, print to terminal
+with open(output_file, 'r') as readfile:
+    print(readfile.read())
+
+
 
